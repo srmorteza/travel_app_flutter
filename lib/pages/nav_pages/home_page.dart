@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travel/misc/colors.dart';
 import 'package:travel/widgets/app_large_text.dart';
 
 class HomePage extends StatefulWidget {
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 isScrollable: true,
                 labelPadding:const EdgeInsets.only(left: 20,right: 0),
                 indicatorSize: TabBarIndicatorSize.label,
-                indicator: ,
+                indicator: CirculeTabIndicator(color: AppColors.mainColor , radius: 4) ,
                 tabs: [
                   Tab(text: "Places"),
                   Tab(text: "Insprations"),
@@ -67,12 +68,34 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
           Container(
+            padding: const EdgeInsets.only(left: 20),
             height: 300,
             width: double.maxFinite,
             child: TabBarView(
               controller: _tabController,
               children: [
-                Text("hi"),
+                ListView.builder(
+                  itemCount:3,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: const EdgeInsets.only(right: 10,top: 10),
+                      width: 200,
+                      height: 300,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white ,
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  "img/mountain.jpeg"
+                              ),
+                              fit: BoxFit.cover
+                          )
+                      ),
+                    );
+                  },
+
+                ),
                 Text("there"),
                 Text("bye"),
               ],
@@ -87,18 +110,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
 
 class CirculeTabIndicator extends Decoration{
+  final Color color ;
+  double radius ;
+  CirculeTabIndicator({required this .color , required this.radius});
+
   @override
   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
     // TODO: implement createBoxPainter
-    throw UnimplementedError();
+   return _CirculePainter(color:color , radius:radius) ;
   }
 
 }
 
 class _CirculePainter extends BoxPainter{
+  final Color color ;
+  double radius ;
+  _CirculePainter({required this .color , required this.radius});
+
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    // TODO: implement paint
+    Paint _paint=Paint();
+    _paint.color=color ;
+    _paint.isAntiAlias=true ;
+    final Offset circuleOffset= Offset(configuration.size!.width/1.6-radius/2 , configuration.size!.height-radius);
+
+    canvas.drawCircle(offset+circuleOffset, radius, _paint) ;
   }
 
 }
