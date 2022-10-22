@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/misc/colors.dart';
 import 'package:travel/widgets/app_large_text.dart';
+import 'package:travel/widgets/app_text.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,10 +12,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  var images={
+    "balloning.png" : "Balloning" ,
+    "hiking.png" : "hiking" ,
+    "kayaking.png" : "kayaking" ,
+    "snorkling.png" : "snorkling" ,
 
+  };
   @override
   Widget build(BuildContext context) {
-    TabController _tabController =TabController(length: 3, vsync: this);
+    TabController _tabController = TabController(length: 3, vsync: this);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,12 +48,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ],
             ),
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 20),
           Container(
             margin: const EdgeInsets.only(left: 20),
             child: AppLargeText(text: "Discover"),
-           ),
-          SizedBox(height: 30),
+          ),
+          SizedBox(height: 20),
           // tabbar view
           Container(
             child: Align(
@@ -56,13 +63,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 unselectedLabelColor: Colors.grey,
                 controller: _tabController,
                 isScrollable: true,
-                labelPadding:const EdgeInsets.only(left: 20,right: 0),
+                labelPadding: const EdgeInsets.only(left: 20, right: 0),
                 indicatorSize: TabBarIndicatorSize.label,
-                indicator: CirculeTabIndicator(color: AppColors.mainColor , radius: 4) ,
+                indicator:
+                    CirculeTabIndicator(color: AppColors.mainColor, radius: 4),
                 tabs: [
                   Tab(text: "Places"),
                   Tab(text: "Insprations"),
-                  Tab(text: "Emotions",),
+                  Tab(
+                    text: "Emotions",
+                  ),
                 ],
               ),
             ),
@@ -75,66 +85,112 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               controller: _tabController,
               children: [
                 ListView.builder(
-                  itemCount:3,
+                  itemCount: 3,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-                      margin: const EdgeInsets.only(right: 10,top: 10),
+                      margin: const EdgeInsets.only(right: 10, top: 10),
                       width: 200,
                       height: 300,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Colors.white ,
+                          color: Colors.white,
                           image: DecorationImage(
-                              image: AssetImage(
-                                  "img/mountain.jpeg"
-                              ),
-                              fit: BoxFit.cover
-                          )
-                      ),
+                              image: AssetImage("img/mountain.jpeg"),
+                              fit: BoxFit.cover)),
                     );
                   },
-
                 ),
                 Text("there"),
                 Text("bye"),
               ],
             ),
           ),
+          SizedBox(height: 20),
+          Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppLargeText(
+                  text: "Explore more",
+                  size: 22,
+                ),
+                AppText(
+                  text: "See all ",
+                  color: AppColors.textColor1,
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          Container(
+            width: double.maxFinite,
+            height: 80,
+            margin: const EdgeInsets.only(left: 20),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+                itemCount: 4,
+                itemBuilder: (_, index) {
+                  return Container(
+                    margin: const EdgeInsets.only(right: 30),
+                    child: Column(
+                      children: [
+                        Container(
+                        //  margin: const EdgeInsets.only(right: 50),
+                          width: 60 ,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                              image: DecorationImage(
+                                  image: AssetImage("img/"+images.keys.elementAt(index)),
+                                  fit: BoxFit.cover)),
+                        ),
+                        Container(
+                          child: AppText(text: images.values.elementAt(index), color: AppColors.textColor2,),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+          )
         ],
       ),
     );
   }
 }
 
+class CirculeTabIndicator extends Decoration {
+  final Color color;
 
+  double radius;
 
-class CirculeTabIndicator extends Decoration{
-  final Color color ;
-  double radius ;
-  CirculeTabIndicator({required this .color , required this.radius});
+  CirculeTabIndicator({required this.color, required this.radius});
 
   @override
   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
     // TODO: implement createBoxPainter
-   return _CirculePainter(color:color , radius:radius) ;
+    return _CirculePainter(color: color, radius: radius);
   }
-
 }
 
-class _CirculePainter extends BoxPainter{
-  final Color color ;
-  double radius ;
-  _CirculePainter({required this .color , required this.radius});
+class _CirculePainter extends BoxPainter {
+  final Color color;
+
+  double radius;
+
+  _CirculePainter({required this.color, required this.radius});
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    Paint _paint=Paint();
-    _paint.color=color ;
-    _paint.isAntiAlias=true ;
-    final Offset circuleOffset= Offset(configuration.size!.width/1.6-radius/2 , configuration.size!.height-radius);
+    Paint _paint = Paint();
+    _paint.color = color;
+    _paint.isAntiAlias = true;
+    final Offset circuleOffset = Offset(
+        configuration.size!.width / 1.6 - radius / 2,
+        configuration.size!.height - radius);
 
-    canvas.drawCircle(offset+circuleOffset, radius, _paint) ;
+    canvas.drawCircle(offset + circuleOffset, radius, _paint);
   }
-
 }
