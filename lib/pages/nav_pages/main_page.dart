@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/pages/nav_pages/bar_item_page.dart';
-import 'package:travel/pages/nav_pages/home_page.dart';
+import 'package:travel/pages/home_page.dart';
 import 'package:travel/pages/nav_pages/my_page.dart';
 import 'package:travel/pages/nav_pages/search_page.dart';
 
