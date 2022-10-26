@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/cubit/app_cubits.dart';
 import 'package:travel/misc/colors.dart';
 import 'package:travel/widgets/app_large_text.dart';
 import 'package:travel/widgets/app_text.dart';
@@ -54,17 +56,11 @@ class _WellcomPageState extends State<WellcomPage> {
                           ),
                         ),
                         SizedBox(height: 40,),
-                        ResponsiveButton()
-
-
-
-
-
-
-
-
-
-
+                        GestureDetector(
+                            onTap: (){
+                              BlocProvider.of<AppCubits>(context).getData();
+                            },
+                            child: Row(children:[ Container( width:120 , child: ResponsiveButton(width: 120,))]))
                       ],
                     ),
                     Column(
