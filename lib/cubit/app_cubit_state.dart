@@ -38,3 +38,12 @@ class LoadedState extends CubitState {
   List<Object> get props => [places];
 
 }
+
+class DetailState extends CubitState {
+  DetailState(this.places) ;
+  final DataModel places;
+  @override
+  // TODO: implement props
+  List<Object> get props => [places];
+
+}
