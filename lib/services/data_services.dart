@@ -7,7 +7,7 @@ class DataServices{
 
 
 
- Future<List<DataModel>> getInfo(places) async {
+ Future<List<DataModel>> getInfo() async {
    var apiurl='/getplaces';
     http.Response res = await http.get(Uri.parse(baseUrl+apiurl));
     try{
